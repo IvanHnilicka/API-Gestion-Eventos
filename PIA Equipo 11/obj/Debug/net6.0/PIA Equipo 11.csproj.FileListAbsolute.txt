@@ -1,0 +1,32 @@
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\appsettings.json
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\PIA Equipo 11.exe
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\PIA Equipo 11.deps.json
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\PIA Equipo 11.runtimeconfig.json
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\PIA Equipo 11.dll
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\PIA Equipo 11.pdb
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.csproj.AssemblyReference.cache
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.AssemblyInfoInputs.cache
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.AssemblyInfo.cs
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\staticwebassets\msbuild.PIA Equipo 11.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\staticwebassets\msbuild.build.PIA Equipo 11.props
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.PIA Equipo 11.props
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.PIA Equipo 11.props
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\staticwebassets.pack.json
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\scopedcss\bundle\PIA Equipo 11.styles.css
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.csproj.CopyComplete
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.dll
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\refint\PIA Equipo 11.dll
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.pdb
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\PIA Equipo 11.genruntimeconfig.cache
+C:\Users\Usuario\OneDrive\Documents\6to semestre\Desarrollo Web Backend\PIA Equipo 11\PIA Equipo 11\obj\Debug\net6.0\ref\PIA Equipo 11.dll
