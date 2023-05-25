@@ -15,7 +15,6 @@ namespace PIA_Equipo_11
         public void ConfigureServices(IServiceCollection services)
         {
 
-
             services.AddControllers();
 
             //Conexion a la base de datos

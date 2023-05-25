@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PIA_Equipo_11.Entidades;
 
 namespace PIA_Equipo_11.Controllers
@@ -7,14 +8,55 @@ namespace PIA_Equipo_11.Controllers
     [Route("api/usuarios")]
     public class UsuarioController: ControllerBase
     {
-        [HttpGet]
-        public ActionResult<List<Usuario>> GetUsuarios()
+        private readonly ApplicationDbContext dbContext;
+
+        public UsuarioController(ApplicationDbContext context, IConfiguration configuration)
         {
-            return new List<Usuario>()
+            dbContext = context;
+        }
+
+        [HttpGet]
+        public async Task<List<Usuario>> GetUsuarios()
+        {
+            var usuarios = await dbContext.Usuarios.ToListAsync();
+            return usuarios;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> PostUsuario(Usuario usuario)
+        {
+            dbContext.Add(usuario);
+            await dbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> PutUsuario(int id, Usuario usuario)
+        {
+            var existe = await dbContext.Usuarios.AnyAsync(x => x.Id == id);
+            if (!existe)
             {
-                new Usuario() { Id = 1, Nombre = "Ivan", Correo = "ivan@outlook.com", Telefono = "8123958235"},
-                new Usuario() { Id = 2, Nombre = "Raymundo", Correo = "raymundo@gmail.com", Telefono = "8126574823"}
-            };
+                return NotFound();
+            }
+
+            dbContext.Update(usuario);
+            await dbContext.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> DeleteUsuario(int id)
+        {
+            var existe = await dbContext.Usuarios.AnyAsync(x => x.Id == id);
+            if(!existe)
+            {
+                return NotFound();
+            }
+
+            dbContext.Remove(new Usuario { Id = id });
+            await dbContext.SaveChangesAsync();
+            return Ok();
         }
     }
 }

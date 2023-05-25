@@ -12,7 +12,7 @@ using PIA_Equipo_11;
 namespace PIA_Equipo_11.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230525031128_inicial")]
+    [Migration("20230525033132_inicial")]
     partial class inicial
     {
         /// <inheritdoc />
