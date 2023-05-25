@@ -127,6 +127,8 @@ C:\Users\Usuario\OneDrive\Escritorio\PIA Backend\PIA_Backend\PIA Equipo 11\bin\D
 C:\Users\Usuario\OneDrive\Escritorio\PIA Backend\PIA_Backend\PIA Equipo 11\bin\Debug\net6.0\Azure.Core.dll
 C:\Users\Usuario\OneDrive\Escritorio\PIA Backend\PIA_Backend\PIA Equipo 11\bin\Debug\net6.0\Azure.Identity.dll
 C:\Users\Usuario\OneDrive\Escritorio\PIA Backend\PIA_Backend\PIA Equipo 11\bin\Debug\net6.0\Humanizer.dll
+C:\Users\Usuario\OneDrive\Escritorio\PIA Backend\PIA_Backend\PIA Equipo 11\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Usuario\OneDrive\Escritorio\PIA Backend\PIA_Backend\PIA Equipo 11\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\Usuario\OneDrive\Escritorio\PIA Backend\PIA_Backend\PIA Equipo 11\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Usuario\OneDrive\Escritorio\PIA Backend\PIA_Backend\PIA Equipo 11\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\Usuario\OneDrive\Escritorio\PIA Backend\PIA_Backend\PIA Equipo 11\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll

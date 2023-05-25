@@ -15,6 +15,5 @@
         public List<EventosFavoritos> EventosFavoritos { get; set; }
         public List<ComentariosUsuario> ComentariosUsuario { get; set; }
         public List<Codigo> Codigo { get; set; }
-
     }
 }
