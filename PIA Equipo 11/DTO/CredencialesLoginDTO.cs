@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PIA_Equipo_11.Entidades
+namespace PIA_Equipo_11.DTO
 {
-    public class CredencialesUsuario
+    public class CredencialesLoginDTO
     {
-        public string Nombre { get; set; }
-        public string Telefono { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }

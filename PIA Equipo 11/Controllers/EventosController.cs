@@ -15,7 +15,6 @@ namespace PIA_Equipo_11.Controllers
     public class EventosController: ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
-        private readonly UserManager<IdentityUser> userManager;
         private readonly ILogger<EventosController> logger;
         //Añadir el mapper
         private readonly IMapper mapper;
@@ -92,11 +91,11 @@ namespace PIA_Equipo_11.Controllers
                     var email = emailClaim.Value;
                     return Ok(email);
                 }
-            }
-            
+            }            
 
-            return Ok("No hay email :(");
+            return NotFound("No se ha podido obtener el email");
         }
+
 
         // Crear evento
         [HttpPost]        

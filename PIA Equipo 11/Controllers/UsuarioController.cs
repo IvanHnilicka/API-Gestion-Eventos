@@ -15,14 +15,14 @@ namespace PIA_Equipo_11.Controllers
         //Añadir el mapper
         private readonly IMapper mapper;
 
-        public UsuarioController(ApplicationDbContext context, IConfiguration configuration, IMapper mapper)
+        public UsuarioController(ApplicationDbContext context, IMapper mapper)
         {
             //Añadir el mapper
             this.mapper = mapper;
             dbContext = context;
         }
 
-
+        /*
         // Muestra lista de usuarios
         [HttpGet]
         public async Task<List<Usuario>> GetUsuarios()
@@ -30,12 +30,11 @@ namespace PIA_Equipo_11.Controllers
             var usuarios = await dbContext.Usuarios.ToListAsync();
             return usuarios;
         }
+        */
 
         //Lista de usuarios sin id
         [HttpGet]
-        [Route("api/usuarios/GetSinID")]
-                            //Se retornará una lista UsuarioDTO
-        public async Task<List<UsuarioDTO>> GetUsuariosSinID()
+        public async Task<List<UsuarioDTO>> GetUsuarios()
         {
             //Se obtienen los usuarios
             var usuarios = await dbContext.Usuarios.ToListAsync();
