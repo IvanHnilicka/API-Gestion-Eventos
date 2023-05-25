@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PIA_Equipo_11.Entidades;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,9 +16,11 @@ namespace PIA_Equipo_11.Controllers
         private readonly UserManager<IdentityUser> userManager;
         private readonly IConfiguration configuration;
         private readonly SignInManager<IdentityUser> signInManager;
+        private readonly ApplicationDbContext dbContext;
 
-        public CuentasController(UserManager<IdentityUser> userManager, IConfiguration configuration, SignInManager<IdentityUser> signInManager)
+        public CuentasController(ApplicationDbContext context,UserManager<IdentityUser> userManager, IConfiguration configuration, SignInManager<IdentityUser> signInManager)
         {
+            this.dbContext = context;
             this.userManager = userManager;
             this.configuration = configuration;
             this.signInManager = signInManager;
@@ -54,6 +57,13 @@ namespace PIA_Equipo_11.Controllers
             {
                 return BadRequest("No ha sido posible iniciar sesion");
             }
+        }
+
+        [HttpGet]
+        public async Task<List<IdentityUser>> GetCredenciales()
+        {
+            var credenciales = await dbContext.Users.ToListAsync();
+            return credenciales;
         }
 
 

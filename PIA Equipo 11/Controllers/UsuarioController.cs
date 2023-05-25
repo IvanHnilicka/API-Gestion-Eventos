@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PIA_Equipo_11.DTO;
 using PIA_Equipo_11.Entidades;
 
 namespace PIA_Equipo_11.Controllers
@@ -10,9 +12,13 @@ namespace PIA_Equipo_11.Controllers
     public class UsuarioController: ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
+        //Añadir el mapper
+        private readonly IMapper mapper;
 
-        public UsuarioController(ApplicationDbContext context, IConfiguration configuration)
+        public UsuarioController(ApplicationDbContext context, IConfiguration configuration, IMapper mapper)
         {
+            //Añadir el mapper
+            this.mapper = mapper;
             dbContext = context;
         }
 
@@ -25,12 +31,26 @@ namespace PIA_Equipo_11.Controllers
             return usuarios;
         }
 
+        //Lista de usuarios sin id
+        [HttpGet]
+        [Route("api/usuarios/GetSinID")]
+                            //Se retornará una lista UsuarioDTO
+        public async Task<List<UsuarioDTO>> GetUsuariosSinID()
+        {
+            //Se obtienen los usuarios
+            var usuarios = await dbContext.Usuarios.ToListAsync();
+            //Se mapean a la forma DTO
+            var usuariodto = mapper.Map<List<UsuarioDTO>>(usuarios);
+            //Se retorna
+            return usuariodto;
+        }
+
 
         // Crear usuario
         [HttpPost]
-        public async Task<ActionResult> PostUsuario(Usuario usuario)
+        public async Task<ActionResult> PostUsuario(UsuarioDTO usuariodto)
         {
-            var correoRegistrado = await dbContext.Usuarios.AnyAsync(x => x.Correo ==  usuario.Correo);
+            var correoRegistrado = await dbContext.Usuarios.AnyAsync(x => x.Correo ==  usuariodto.Correo);
 
             // Valida que no exista correo en base de datos
             if (correoRegistrado)
@@ -38,6 +58,7 @@ namespace PIA_Equipo_11.Controllers
                 return BadRequest("El correo ya se encuentra registrado");
             }
 
+            var usuario = mapper.Map<Usuario>(usuariodto);
             dbContext.Add(usuario);
             await dbContext.SaveChangesAsync();
 
@@ -47,13 +68,14 @@ namespace PIA_Equipo_11.Controllers
 
         // Modificar datos de usuario por su ID
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> PutUsuario(int id, Usuario usuario)
+        public async Task<ActionResult> PutUsuario(int id, UsuarioDTO usuariodto)
         {
             var existe = await dbContext.Usuarios.AnyAsync(x => x.Id == id);
             if (!existe)
             {
                 return NotFound();
             }
+            var usuario = mapper.Map<Usuario>(usuariodto);
 
             dbContext.Update(usuario);
             await dbContext.SaveChangesAsync();

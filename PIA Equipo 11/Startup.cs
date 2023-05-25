@@ -22,6 +22,7 @@ namespace PIA_Equipo_11
         {
 
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
 
             //Conexion a la base de datos
             services.AddDbContext<ApplicationDbContext>(options =>

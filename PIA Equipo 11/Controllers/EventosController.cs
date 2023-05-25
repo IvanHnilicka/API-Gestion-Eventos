@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PIA_Equipo_11.Entidades;
+using System.IdentityModel.Tokens.Jwt;
+using PIA_Equipo_11.DTO;
 
 namespace PIA_Equipo_11.Controllers
 {
@@ -13,9 +17,12 @@ namespace PIA_Equipo_11.Controllers
         private readonly ApplicationDbContext dbContext;
         private readonly UserManager<IdentityUser> userManager;
         private readonly ILogger<EventosController> logger;
+        //Añadir el mapper
+        private readonly IMapper mapper;
 
-        public EventosController(ApplicationDbContext context, ILogger<EventosController> logger)
+        public EventosController(ApplicationDbContext context, ILogger<EventosController> logger, IMapper mapper)
         {
+            this.mapper = mapper;
             dbContext = context;
             this.logger = logger;
         }
@@ -69,25 +76,61 @@ namespace PIA_Equipo_11.Controllers
         }
 
 
-        // Crear evento
-        [HttpPost]
-        public async Task<ActionResult> PostEvento(Evento evento)
+        [HttpGet("ObtenerEmail")]        
+        public IActionResult GetEmail()
         {
-            /*
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(token);
+                var emailClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "email");
+
+                if (emailClaim != null)
+                {
+                    var email = emailClaim.Value;
+                    return Ok(email);
+                }
+            }
+            
+
+            return Ok("No hay email :(");
+        }
+
+        // Crear evento
+        [HttpPost]        
+        public async Task<ActionResult> PostEvento(EventoDTO eventodto)
+        {
+
             // Busca el usuario logeado para registrarlo como creador del evento
-            var emailClaim = HttpContext.User.Claims.Where(claim => claim.Type == "email").FirstOrDefault();
-            var email = emailClaim.Value;
-            var organizador = await userManager.FindByEmailAsync(email);
-            evento.UsuarioId = organizador.Id;
-            */
+            //var emailClaim = HttpContext.User.Claims.Where(claim => claim.Type == "email").FirstOrDefault();
+
+            var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var jwtToken = handler.ReadJwtToken(token);
+                var emailClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "email");
+
+                if (emailClaim != null)
+                {
+                    var email = emailClaim.Value;
+                    var organizador = dbContext.Usuarios.Where(u => u.Correo == email).FirstOrDefault().Id;
+                    eventodto.UsuarioId = organizador;                    
+                }
+            }                                                           
 
             try
             {
                 // Formatea la fecha a guardar en la base de datos
-                var fecha = evento.Fecha.ToString("dd-MM-yyyy, HH:mm");
+                var fecha = eventodto.Fecha.ToString("dd-MM-yyyy, HH:mm");
                 var fechaFormateada = DateTime.Parse(fecha);
-                evento.Fecha = fechaFormateada;
+                eventodto.Fecha = fechaFormateada;
 
+                //Mappear los eventodto a Evento y guardarlo en evento
+                var evento = mapper.Map<Evento>(eventodto);
                 dbContext.Add(evento);
                 await dbContext.SaveChangesAsync();
 
@@ -96,21 +139,22 @@ namespace PIA_Equipo_11.Controllers
             catch(Exception ex)
             {
                 logger.LogError(ex.Message);
-                return BadRequest("Error. " + ex);
+                return BadRequest("Error. "+ ex);
             }
         }
 
 
         // Modificar datos del evento por su ID
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> PutEvento(int id, Evento evento)
+        public async Task<ActionResult> PutEvento(int id, EventoDTO eventodto)
         {
             var existe = await dbContext.Eventos.AnyAsync(x => x.Id == id);
             if (!existe)
             {
                 return NotFound();
             }
-
+            //Mappear los eventodto a Evento y guardarlo en usuario
+            var evento = mapper.Map<Evento>(eventodto);
             dbContext.Update(evento);
             await dbContext.SaveChangesAsync();
             return Ok();

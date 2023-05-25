@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\PIA Equipo 11",
+    "\\PIA Equipo 11\\Controllers"
   ],
-  "SelectedNode": "\\PIA Equipo 11.sln",
+  "SelectedNode": "\\PIA Equipo 11\\Controllers\\EventosController.cs",
   "PreviewInSolutionExplorer": false
 }
