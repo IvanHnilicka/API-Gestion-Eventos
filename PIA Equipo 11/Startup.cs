@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+    
 
 namespace PIA_Equipo_11
 {
@@ -17,7 +18,7 @@ namespace PIA_Equipo_11
 
 
             services.AddControllers();
-
+            services.AddAutoMapper(typeof(Startup));
             //Conexion a la base de datos
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
