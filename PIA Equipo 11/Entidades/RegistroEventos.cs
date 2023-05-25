@@ -1,7 +1,10 @@
-﻿namespace PIA_Equipo_11.Entidades
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PIA_Equipo_11.Entidades
 {
     public class RegistroEventos
     {
+        
         public int UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
         public int EventoId { get; set; }

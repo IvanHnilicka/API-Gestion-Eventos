@@ -1,4 +1,6 @@
-﻿namespace PIA_Equipo_11.Entidades
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PIA_Equipo_11.Entidades
 {
     public class ComentariosUsuario
     {

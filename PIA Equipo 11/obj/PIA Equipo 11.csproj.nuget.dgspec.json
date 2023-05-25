@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\OneDrive\\Documents\\6to semestre\\Desarrollo Web Backend\\PIA Equipo 11\\PIA Equipo 11\\PIA Equipo 11.csproj": {}
+    "C:\\Users\\raymu\\source\\repos\\PIA_Backend2\\PIA Equipo 11\\PIA Equipo 11.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\OneDrive\\Documents\\6to semestre\\Desarrollo Web Backend\\PIA Equipo 11\\PIA Equipo 11\\PIA Equipo 11.csproj": {
+    "C:\\Users\\raymu\\source\\repos\\PIA_Backend2\\PIA Equipo 11\\PIA Equipo 11.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\OneDrive\\Documents\\6to semestre\\Desarrollo Web Backend\\PIA Equipo 11\\PIA Equipo 11\\PIA Equipo 11.csproj",
+        "projectUniqueName": "C:\\Users\\raymu\\source\\repos\\PIA_Backend2\\PIA Equipo 11\\PIA Equipo 11.csproj",
         "projectName": "PIA Equipo 11",
-        "projectPath": "C:\\Users\\Usuario\\OneDrive\\Documents\\6to semestre\\Desarrollo Web Backend\\PIA Equipo 11\\PIA Equipo 11\\PIA Equipo 11.csproj",
-        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\OneDrive\\Documents\\6to semestre\\Desarrollo Web Backend\\PIA Equipo 11\\PIA Equipo 11\\obj\\",
+        "projectPath": "C:\\Users\\raymu\\source\\repos\\PIA_Backend2\\PIA Equipo 11\\PIA Equipo 11.csproj",
+        "packagesPath": "C:\\Users\\raymu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\raymu\\source\\repos\\PIA_Backend2\\PIA Equipo 11\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\raymu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,16 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.0-preview.4.23259.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0-preview.4.23259.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
@@ -64,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

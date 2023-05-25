@@ -1,4 +1,7 @@
-﻿namespace PIA_Equipo_11
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+
+namespace PIA_Equipo_11
 {
     public class Startup
     {
@@ -11,9 +14,19 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddControllers();
+
+            //Conexion a la base de datos
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("defaultConnection")));
+
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo {  Title = "ApiEventos", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
