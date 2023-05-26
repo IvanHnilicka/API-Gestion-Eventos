@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,6 +13,7 @@ namespace PIA_Equipo_11.Controllers
 {
     [ApiController]
     [Route("api/usuarios")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UsuarioController: ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
@@ -74,13 +77,19 @@ namespace PIA_Equipo_11.Controllers
         public async Task<ActionResult> DeleteUsuario(int id)
         {
             var existe = await dbContext.Usuarios.AnyAsync(x => x.Id == id);
-            if(!existe)
+            if (!existe)
             {
                 return NotFound();
             }
 
+            var correo = await dbContext.Usuarios.Where(x => x.Id == id).Select(y => y.Correo).FirstOrDefaultAsync();
+            var cuenta = await dbContext.Users.FirstOrDefaultAsync(x => x.Email == correo);
+            dbContext.Users.Remove(cuenta);
+            await dbContext.SaveChangesAsync();
+
             dbContext.Remove(new Usuario { Id = id });
             await dbContext.SaveChangesAsync();
+
             return Ok();
         }
 
@@ -109,6 +118,43 @@ namespace PIA_Equipo_11.Controllers
 
             return Ok(objetoanonimo);
         }
+
+
+        // Añadir a favoritos
+        [HttpPost("agregarFavorito")]
+        public async Task<ActionResult> PostFavoritos(string nombre)
+        {
+            //Obtiene el evento
+            var evento = await dbContext.Eventos.Where(evento => evento.Nombre == nombre).FirstOrDefaultAsync();
+
+            //Obtiene el usuario
+            var usuarioId = getIdLogeado();
+
+            var datosFavorito = new EventosFavoritos
+            {
+                UsuarioId = usuarioId,
+                EventoId = evento.Id,
+            };
+
+
+            dbContext.Add(datosFavorito);
+            await dbContext.SaveChangesAsync();
+            return Ok("Añadido a Favoritos exitosamente");
+        }
+
+
+        // Mostrar favoritos
+        [HttpGet("eventosFavoritos/lista")]
+        public async Task<List<InformacionEventoDTO>> GetFavoritos()
+        {
+            var usuarioId = getIdLogeado();
+            var eventosFavoritos = await dbContext.EventosFavoritos.Where(ef => ef.UsuarioId == usuarioId).Select(x => x.Evento).ToListAsync();
+            List<InformacionEventoDTO> eventosFavoritosDTO = mapper.Map<List<InformacionEventoDTO>>(eventosFavoritos);
+
+            return eventosFavoritosDTO;
+        }
+
+
 
 
         // Retorna el id del usuario que esta logeado
