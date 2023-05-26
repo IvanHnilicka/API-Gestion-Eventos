@@ -2,7 +2,7 @@
 {
     public class RegistroEventoDTO
     {
-        public UsuarioDTO Usuario { get; set; }
         public InformacionEventoDTO Evento { get; set; }
+        public UsuarioDTO Usuario { get; set; }
     }
 }

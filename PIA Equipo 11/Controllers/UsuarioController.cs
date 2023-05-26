@@ -89,16 +89,16 @@ namespace PIA_Equipo_11.Controllers
         [HttpGet("asistencia")]
         public async Task<ActionResult> GetHistorialAsistencia()
         {
-            //Obtiene el usuarioid
             var usuarioId = getIdLogeado();
 
             //Obtiene los eventos asistidos y registrados
             var eventosAsistidos = await dbContext.RegistroEventos.Where(x => x.UsuarioId == usuarioId && x.Asistencia == true).Select(x => x.Evento).ToListAsync();
             var eventosRegistrados = await dbContext.RegistroEventos.Where(x => x.UsuarioId == usuarioId && x.Asistencia == false).Select(x => x.Evento).ToListAsync();
 
-            //Los pasa a bonito uwu
+
             List<InformacionEventoDTO> eventosAsistidosDTO = mapper.Map<List<InformacionEventoDTO>>(eventosAsistidos);
             List<InformacionEventoDTO> eventosRegistradosDTO = mapper.Map<List<InformacionEventoDTO>>(eventosRegistrados);
+
 
             //Crea un objeto anonimo para imprimirlos
             var objetoanonimo = new
@@ -107,9 +107,7 @@ namespace PIA_Equipo_11.Controllers
                 Registro = eventosRegistradosDTO
             };
 
-            //Los imprime
             return Ok(objetoanonimo);
-
         }
 
 

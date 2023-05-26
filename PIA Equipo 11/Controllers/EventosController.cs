@@ -254,16 +254,15 @@ namespace PIA_Equipo_11.Controllers
         }
 
 
-
-
-
         //Lista de registro a eventos
         [HttpGet("registro")]
-        public async Task<List<RegistroEventos>> GetRegistroEventos()
+        public async Task<List<RegistroEventoDTO>> GetRegistroEventos()
         {
-            return await dbContext.RegistroEventos.Include(x => x.Evento).Include(y => y.Usuario).ToListAsync();
-
+            var registros = await dbContext.RegistroEventos.Include(x => x.Evento).Include(y => y.Usuario).ToListAsync();
+            var registrosDTO = mapper.Map<List<RegistroEventoDTO>>(registros);
+            return registrosDTO;
         }
+
 
         // Registro a eventos
         [HttpPost("registro/{nombre}")]

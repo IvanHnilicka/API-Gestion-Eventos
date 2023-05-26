@@ -17,6 +17,7 @@ namespace PIA_Equipo_11.Utilidades
             CreateMap<PutUsuarioDTO, Usuario>();
             CreateMap<Evento, InformacionExtraEventoDTO>();
             CreateMap<ComentariosUsuario, ComentariosDTO>();
+            CreateMap<RegistroEventos, RegistroEventoDTO>();
 
             /*CreateMap<Alumno, AlumnoDTOConClases>()
                 .ForMember(alumnoDTO => alumnoDTO.Clases, opciones => opciones.MapFrom(MapAlumnoDTOClases));*/

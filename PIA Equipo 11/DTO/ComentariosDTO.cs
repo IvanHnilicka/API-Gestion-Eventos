@@ -2,7 +2,6 @@
 {
     public class ComentariosDTO
     {
-        public string Usuario { get; set; }
         public string Comentario { get; set; }
     }
 }
