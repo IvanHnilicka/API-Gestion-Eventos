@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using PIA_Equipo_11.DTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.Runtime.CompilerServices;
 
 namespace PIA_Equipo_11.Controllers
 {
@@ -171,10 +172,18 @@ namespace PIA_Equipo_11.Controllers
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Put(int id, EventoDTO eventoDTO)
         {
+            var idLogeado = getIdLogeado();
+            var idOrganizador = await dbContext.Eventos.Where(x => x.Id == id).Select(y => y.UsuarioId).FirstOrDefaultAsync();
+
             var exist = await dbContext.Eventos.AnyAsync(x => x.Id == id);
             if (!exist)
             {
                 return NotFound();
+            }
+
+            if(idOrganizador != idLogeado)
+            {
+                return BadRequest("No puedes modificar este evento");
             }
 
             var evento = mapper.Map<Evento>(eventoDTO);
@@ -230,13 +239,12 @@ namespace PIA_Equipo_11.Controllers
 
 
         //Lista de registro a eventos
-        [HttpGet("registro/lista")]
+        [HttpGet("registro")]
         public async Task<List<RegistroEventos>> GetRegistroEventos()
         {
             return await dbContext.RegistroEventos.Include(x => x.Evento).Include(y => y.Usuario).ToListAsync();
 
         }
-
 
         // Registro a eventos
         [HttpPost("registro/{nombre}")]
@@ -290,8 +298,7 @@ namespace PIA_Equipo_11.Controllers
             }
         }
 
-
-        //Borrar Eventos
+        //Borrar registro a evento
         [HttpDelete("registro")]
         public async Task<ActionResult> DeleteRegistro(string nombre)
         {
@@ -319,6 +326,57 @@ namespace PIA_Equipo_11.Controllers
                 return Ok("Email null");
             }
             return Ok("Error en el token");
+        }
+
+
+        //Asistir a evento
+        [HttpPut("asistencia")]
+        public async Task<ActionResult> asistir(string nombre)
+        {
+            var exist = await dbContext.Eventos.AnyAsync(x => x.Nombre == nombre);
+            if (!exist)
+            {
+                return NotFound();
+            }
+            //Obtiene el eventoid
+            var evento = await dbContext.Eventos.Where(evento => evento.Nombre.Contains(nombre)).FirstOrDefaultAsync();
+            var eventoId = evento.Id;
+            //Obtiene el usuarioid
+            var usuarioId = getIdLogeado();
+            //Obtiene el registro
+            var registroEvento = dbContext.RegistroEventos.Where(x => x.EventoId == eventoId && x.UsuarioId == usuarioId).FirstOrDefault();
+
+            if(registroEvento == null) 
+            {
+                return BadRequest("No se encuentra registrado en el evento");
+            }
+
+            registroEvento.Asistencia = true;
+            registroEvento.Pagado = true;
+
+            dbContext.Update(registroEvento);
+            await dbContext.SaveChangesAsync();
+            return Ok(registroEvento.Costo);
+        }
+
+
+        //Eventos populares
+        [HttpGet("popular")]
+        public async Task<ActionResult> GetEventosPopulares()
+        {
+            var eventosBaratos = await dbContext.Eventos.Where(x => x.Precio <= 500).ToListAsync();
+            List<InformacionExtraEventoDTO> eventosBaratosDTO = mapper.Map<List<InformacionExtraEventoDTO>>(eventosBaratos);
+
+            var eventosGrandes = await dbContext.Eventos.Where(x => x.Capacidad >= 2000).ToListAsync();
+            List<InformacionExtraEventoDTO> eventosGrandesDTO = mapper.Map<List<InformacionExtraEventoDTO>>(eventosGrandes);
+
+            var objetoanonimo = new
+            {
+                Baratos = eventosBaratosDTO,
+                Masivos = eventosGrandesDTO
+            };
+
+            return Ok(objetoanonimo);
         }
     }
 }

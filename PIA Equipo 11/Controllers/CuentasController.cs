@@ -96,12 +96,14 @@ namespace PIA_Equipo_11.Controllers
         }
 
 
+        /*
         [HttpGet]
         public async Task<List<IdentityUser>> GetCredenciales()
         {
             var credenciales = await dbContext.Users.ToListAsync();
             return credenciales;
         }
+        */
 
 
         private RespuestaAutenticacion generarTokenRegistro(CredencialesUsuario credenciales)
