@@ -40,6 +40,7 @@ namespace PIA_Equipo_11.Controllers
 
             if (resultado.Succeeded)
             {
+                /*
                 var usuarioController = new UsuarioController(dbContext, mapper);
                 var datosUsuario = new UsuarioDTO
                 {
@@ -49,6 +50,25 @@ namespace PIA_Equipo_11.Controllers
                 };
 
                 await usuarioController.PostUsuario(datosUsuario);
+                */
+
+                var correoRegistrado = await dbContext.Usuarios.AnyAsync(x => x.Correo == credenciales.Email);
+
+                // Valida que no exista correo en base de datos
+                if (correoRegistrado)
+                {
+                    return BadRequest("El correo ya se encuentra registrado");
+                }
+
+                var datosUsuario = new Usuario
+                {
+                    Nombre = credenciales.Nombre,
+                    Telefono = credenciales.Telefono,
+                    Correo = credenciales.Email
+                };
+
+                dbContext.Usuarios.Add(datosUsuario);
+                await dbContext.SaveChangesAsync();
 
                 return generarTokenRegistro(credenciales);
             }

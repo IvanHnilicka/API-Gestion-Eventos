@@ -12,39 +12,24 @@ namespace PIA_Equipo_11.Controllers
     public class UsuarioController: ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
-        //Añadir el mapper
         private readonly IMapper mapper;
 
         public UsuarioController(ApplicationDbContext context, IMapper mapper)
         {
-            //Añadir el mapper
             this.mapper = mapper;
             dbContext = context;
         }
 
-        /*
-        // Muestra lista de usuarios
-        [HttpGet]
-        public async Task<List<Usuario>> GetUsuarios()
-        {
-            var usuarios = await dbContext.Usuarios.ToListAsync();
-            return usuarios;
-        }
-        */
-
-        //Lista de usuarios sin id
+        // Muestra la lista de usuarios
         [HttpGet]
         public async Task<List<UsuarioDTO>> GetUsuarios()
         {
-            //Se obtienen los usuarios
             var usuarios = await dbContext.Usuarios.ToListAsync();
-            //Se mapean a la forma DTO
             var usuariodto = mapper.Map<List<UsuarioDTO>>(usuarios);
-            //Se retorna
             return usuariodto;
         }
 
-
+        
         // Crear usuario
         [HttpPost]
         public async Task<ActionResult> PostUsuario(UsuarioDTO usuariodto)

@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace PIA_Equipo_11
 {
@@ -21,7 +22,7 @@ namespace PIA_Equipo_11
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
             services.AddAutoMapper(typeof(Startup));
 
             //Conexion a la base de datos
