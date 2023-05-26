@@ -15,7 +15,7 @@ namespace PIA_Equipo_11.Controllers
 {
     [ApiController]
     [Route("api/eventos")]
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class EventosController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
@@ -42,19 +42,20 @@ namespace PIA_Equipo_11.Controllers
 
 
         // Buscar eventos por nombre
-        [AllowAnonymous]
         [HttpGet("nombre/{nombre}")]
-        public async Task<List<Evento>> GetEventoNombre(string nombre)
+        [AllowAnonymous]
+        public async Task<List<EventoDTO>> GetEventoNombre(string nombre)
         {
             var eventos = await dbContext.Eventos.Where(evento => evento.Nombre.Contains(nombre)).ToListAsync();
-            return eventos;
+            var eventosDTO = mapper.Map<List<EventoDTO>>(eventos);
+            return eventosDTO;
         }
 
 
         // Buscar eventos por fecha
         [HttpGet("fecha/{fecha}")]
         [AllowAnonymous]
-        public async Task<ActionResult<List<Evento>>> GetEventoFecha(string fecha)
+        public async Task<ActionResult<List<EventoDTO>>> GetEventoFecha(string fecha)
         {
             try
             {
@@ -63,7 +64,8 @@ namespace PIA_Equipo_11.Controllers
 
                 // Busca los eventos con esa fecha
                 var eventos = await dbContext.Eventos.Where(evento => evento.Fecha.Date.Equals(fechaConvertida.Date)).ToListAsync();
-                return eventos;
+                var eventosDTO = mapper.Map<List<EventoDTO>>(eventos);
+                return eventosDTO;
 
             } catch (Exception ex)
             {
@@ -76,20 +78,23 @@ namespace PIA_Equipo_11.Controllers
         // Buscar evento por su ubicacion
         [HttpGet("ubicacion/{ubicacion}")]
         [AllowAnonymous]
-        public async Task<List<Evento>> GetEventoUbicacion(string ubicacion)
+        public async Task<List<EventoDTO>> GetEventoUbicacion(string ubicacion)
         {
             var eventos = await dbContext.Eventos.Where(evento => evento.Ubicacion.Contains(ubicacion)).ToListAsync();
-            return eventos;
+            var eventosDTO = mapper.Map<List<EventoDTO>>(eventos);
+            return eventosDTO;
         }
 
 
         [HttpGet("{nombre}/comentarios")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<ComentariosDTO>>> GetComentarios(string nombre)
         {
             var evento = await dbContext.Eventos.FirstOrDefaultAsync(x => x.Nombre == nombre);
             var comentarios = await dbContext.ComentariosUsuarios.Where(x => x.EventoId == evento.Id).ToListAsync();
+            var comentariosDTO = mapper.Map<List<ComentariosDTO>>(comentarios);
 
-            return Ok(comentarios);
+            return comentariosDTO;
         }
 
 
@@ -121,6 +126,12 @@ namespace PIA_Equipo_11.Controllers
         [HttpPost]        
         public async Task<ActionResult> PostEvento(EventoDTO eventodto)
         {
+            var existeEvento = await dbContext.Eventos.AnyAsync(x => x.Nombre == eventodto.Nombre);
+            if (existeEvento)
+            {
+                return BadRequest("Nombre de evento ya registrado");
+            }
+
             try
             {
                 var IdOrganizador = getIdLogeado();
@@ -200,10 +211,18 @@ namespace PIA_Equipo_11.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteEvento(int id)
         {
+            var idLogeado = getIdLogeado();
+            var idOrganizador = await dbContext.Eventos.Where(x => x.Id == id).Select(y => y.UsuarioId).FirstOrDefaultAsync();
+
             var existe = await dbContext.Eventos.AnyAsync(x => x.Id == id);
             if (!existe)
             {
                 return NotFound();
+            }
+
+            if (idOrganizador != idLogeado)
+            {
+                return BadRequest("No puedes eliminar este evento");
             }
 
             dbContext.Remove(new Evento { Id = id });
@@ -362,6 +381,7 @@ namespace PIA_Equipo_11.Controllers
 
         //Eventos populares
         [HttpGet("popular")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetEventosPopulares()
         {
             var eventosBaratos = await dbContext.Eventos.Where(x => x.Precio <= 500).ToListAsync();
