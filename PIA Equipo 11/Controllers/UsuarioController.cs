@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PIA_Equipo_11.DTO;
@@ -152,6 +153,19 @@ namespace PIA_Equipo_11.Controllers
             List<InformacionEventoDTO> eventosFavoritosDTO = mapper.Map<List<InformacionEventoDTO>>(eventosFavoritos);
 
             return eventosFavoritosDTO;
+        }
+
+
+        [HttpDelete("eliminarFavorito/{nombre}")]
+        public async Task<ActionResult> EliminarFavorito(string nombre)
+        {
+            var usuarioId = getIdLogeado();
+            var eventosFavoritos = await dbContext.EventosFavoritos.Where(x => x.UsuarioId == usuarioId).Include(y => y.Evento).ToListAsync();
+            var evento = eventosFavoritos.FirstOrDefault(x => x.Evento.Nombre == nombre);
+
+            dbContext.Remove(evento);
+            await dbContext.SaveChangesAsync();
+            return Ok("Evento eliminado de favoritos");
         }
 
 
