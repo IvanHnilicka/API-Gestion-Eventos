@@ -1,4 +1,7 @@
-﻿namespace PIA_Equipo_11.Entidades
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+
+namespace PIA_Equipo_11.Entidades
 {
     public class Evento
     {

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PIA_Equipo_11.Filtros;
 using System.Globalization;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -22,7 +23,12 @@ namespace PIA_Equipo_11
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            services.AddControllers(opciones =>
+            {
+                opciones.Filters.Add(typeof(FiltroExcepcion));
+            }).AddJsonOptions(x => 
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
             services.AddAutoMapper(typeof(Startup));
 
             //Conexion a la base de datos

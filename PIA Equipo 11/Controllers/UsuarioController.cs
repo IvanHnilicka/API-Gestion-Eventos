@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Logging;
 using PIA_Equipo_11.DTO;
 using PIA_Equipo_11.Entidades;
@@ -73,6 +74,7 @@ namespace PIA_Equipo_11.Controllers
         }
 
 
+        /*
         // Eliminar usuario por su ID
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteUsuario(int id)
@@ -93,6 +95,25 @@ namespace PIA_Equipo_11.Controllers
 
             return Ok();
         }
+        */
+
+        /*
+        [HttpDelete]
+        public async Task<ActionResult> DeleteUsuario()
+        {
+            var idLogeado = getIdLogeado();
+            var usuario = await dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == idLogeado);
+            var cuenta = await dbContext.Users.FirstOrDefaultAsync(x => x.Email == usuario.Correo);
+
+            dbContext.Usuarios.Remove(usuario);
+            await dbContext.SaveChangesAsync();
+
+            dbContext.Users.Remove(cuenta);
+            await dbContext.SaveChangesAsync();
+
+            return Ok("Cuenta eliminada");
+        }
+        */
 
 
         //Historial de asistencia
@@ -128,6 +149,11 @@ namespace PIA_Equipo_11.Controllers
             //Obtiene el evento
             var evento = await dbContext.Eventos.Where(evento => evento.Nombre == nombre).FirstOrDefaultAsync();
 
+            if(evento == null)
+            {
+                return NotFound();
+            }
+
             //Obtiene el usuario
             var usuarioId = getIdLogeado();
 
@@ -162,6 +188,11 @@ namespace PIA_Equipo_11.Controllers
             var usuarioId = getIdLogeado();
             var eventosFavoritos = await dbContext.EventosFavoritos.Where(x => x.UsuarioId == usuarioId).Include(y => y.Evento).ToListAsync();
             var evento = eventosFavoritos.FirstOrDefault(x => x.Evento.Nombre == nombre);
+
+            if(evento == null)
+            {
+                return NotFound();
+            }
 
             dbContext.Remove(evento);
             await dbContext.SaveChangesAsync();

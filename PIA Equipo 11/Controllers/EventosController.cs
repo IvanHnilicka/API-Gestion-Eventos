@@ -189,7 +189,7 @@ namespace PIA_Equipo_11.Controllers
             var exist = await dbContext.Eventos.AnyAsync(x => x.Id == id);
             if (!exist)
             {
-                return NotFound();
+                return NotFound("No se ha encontrado el evento");
             }
 
             if(idOrganizador != idLogeado)
@@ -217,7 +217,7 @@ namespace PIA_Equipo_11.Controllers
             var existe = await dbContext.Eventos.AnyAsync(x => x.Id == id);
             if (!existe)
             {
-                return NotFound();
+                return NotFound("No se ha encontrado el evento");
             }
 
             if (idOrganizador != idLogeado)
@@ -270,6 +270,11 @@ namespace PIA_Equipo_11.Controllers
         {
             //Obtiene el evento
             var evento = await dbContext.Eventos.Where(evento => evento.Nombre == nombre).FirstOrDefaultAsync();
+            if(evento == null)
+            {
+                return NotFound("No se ha encontrado el evento");
+            }
+
             var capacidad = evento.Capacidad;
             var registros = dbContext.Eventos.Where(evento => evento.Nombre == nombre).Count() - 1;
             if(capacidad - registros == 0)
@@ -321,7 +326,12 @@ namespace PIA_Equipo_11.Controllers
         public async Task<ActionResult> DeleteRegistro(string nombre)
         {
             //Obtiene el evento
-            var eventos = await dbContext.Eventos.Where(evento => evento.Nombre.Contains(nombre)).FirstOrDefaultAsync();
+            var eventos = await dbContext.Eventos.Where(evento => evento.Nombre == nombre).FirstOrDefaultAsync();
+
+            if(eventos == null)
+            {
+                return NotFound("No se ha encontrado el evento");
+            }
 
             //Obtiene el usuario            
             var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
@@ -341,7 +351,6 @@ namespace PIA_Equipo_11.Controllers
                     return Ok();
 
                 }
-                return Ok("Email null");
             }
             return Ok("Error en el token");
         }
@@ -354,7 +363,7 @@ namespace PIA_Equipo_11.Controllers
             var exist = await dbContext.Eventos.AnyAsync(x => x.Nombre == nombre);
             if (!exist)
             {
-                return NotFound();
+                return NotFound("No se ha encontrado el evento");
             }
             //Obtiene el eventoid
             var evento = await dbContext.Eventos.Where(evento => evento.Nombre.Contains(nombre)).FirstOrDefaultAsync();
