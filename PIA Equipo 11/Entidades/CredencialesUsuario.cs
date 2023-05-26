@@ -8,6 +8,8 @@ namespace PIA_Equipo_11.Entidades
         [SoloLetras]
         public string Nombre { get; set; }
         [SoloNumeros]
+        [MaxLength(10, ErrorMessage = "Campo Telefono debe contener 10 digitos")]
+        [MinLength(10, ErrorMessage = "Campo Telefono debe contener 10 digitos")]
         public string Telefono { get; set; }
         [Required]
         [EmailAddress]

@@ -10,6 +10,8 @@ namespace PIA_Equipo_11.DTO
         public string Nombre { get; set; }
         [Required(ErrorMessage = "Ingrese telefono")]
         [SoloNumeros]
+        [MaxLength(10, ErrorMessage = "Campo Telefono debe contener 10 digitos")]
+        [MinLength(10, ErrorMessage = "Campo Telefono debe contener 10 digitos")]
         public string Telefono { get; set; }
     }
 }
