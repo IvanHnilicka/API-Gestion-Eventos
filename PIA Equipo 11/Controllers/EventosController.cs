@@ -282,6 +282,7 @@ namespace PIA_Equipo_11.Controllers
                 return BadRequest("No hay lugares disponibles para el evento");
             }
 
+
             //Obtiene el usuario
             var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if (!string.IsNullOrEmpty(token))
@@ -320,6 +321,7 @@ namespace PIA_Equipo_11.Controllers
                 return BadRequest("No se ha podido obtener la autorizacion. ");
             }
         }
+
 
         //Borrar registro a evento
         [HttpDelete("registro")]
